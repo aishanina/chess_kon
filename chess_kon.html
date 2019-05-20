@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+<form name="task1">
+<b>Исходное положение:</b></br>
+<input type="text" id="place" placeholder="Введите местоположение" required></input></p>
+<input type="button" id="result" value="Ок" />
+</form>
+<script>
+
+function resultForm(e){
+  
+  	// получаем значение введенного местоположения коня
+    var placeBox = document.getElementById("place").value;
+    
+    // проверяем введенное значение на формат данных
+    if (document.getElementById("place").value.search(/[ABCDEFGH][12345678]/)) {
+    		alert ("Вводимое значение должно состоять из заглавной латинской буквы (А-H) и цифры (1-8), например: D6");
+        return;
+    }
+ 		else {
+
+				// находим координаты указанного местоположения
+        // по вертикали
+        var str1 = ["A","B","C","D","E","F","G","H"]; 
+        var xplace, newx;
+        
+        for (var i = 0; i < str1.length; i++) {
+        		if (placeBox[0] == str1[i]) {
+								xplace = i;
+            }            
+        }
+        
+        // находим координаты указанного местоположения
+        // по горизонтали
+        var str2 = ["1","2","3","4","5","6","7","8"];  
+        var yplace, newy;
+        for (var j = 0; j < str2.length; j++) {
+        		if (placeBox[1] == str2[j]) {
+								yplace = j; 
+            }            
+        }
+        
+        // horizontal и vertical - массивы со значениями отклонений от позиции, 
+        // указанной пользователем, для совершения хода конем       
+        var horizontal = ["2","1","-1","-2","-2","-1","1","2"];
+        var vertical = ["-1","-2","-2","-1","1","2","2","1"];
+        var newplaces = "";
+        
+        // проверяем клетки шахматной доски на возможный ход и записываем результат в строку
+        for (i = 0; i < horizontal.length; i++) {        		 
+            newx = parseInt(horizontal[i]) + parseInt(xplace);
+            newy = parseInt(vertical[i]) + parseInt(yplace);
+            if (newx >= 0 & newy >= 0 & newx < str1.length & newy < str2.length) {
+                newplaces = newplaces + str1[newx] + "" + str2[newy] + " "; 
+            }
+            
+        }
+        
+        // выводим результат
+    		alert ("Возможные варианты хода: \n\n" + newplaces);
+ 		}   
+    
+} 
+document.getElementById("result").onclick = resultForm;
+</script>
+</body>
+</html>
